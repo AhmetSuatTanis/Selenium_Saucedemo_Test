@@ -32,8 +32,7 @@ class Test_SauceDemo:
         sleep(1)
         passwordInput.clear()
         loginButton.click()
-        sleep(1)
-        # driver.find_element_by_css_selector("h3[data-test='error']")  bunu çalıştıramadım. nedenini bulamadım.
+        sleep(1) 
         errorMessage=driver.find_element(By.CSS_SELECTOR,"h3[data-test='error']")
         print(errorMessage.text)
         testResult=errorMessage.text=="Epic sadface: Password is required"
@@ -51,8 +50,7 @@ class Test_SauceDemo:
         sleep(1)
         passwordInput.send_keys("secret_sauce")
         loginButton.click()
-        sleep(1)
-        # driver.find_element_by_css_selector("h3[data-test='error']")  bunu çalıştıramadım. nedenini bulamadım.
+        sleep(1) 
         errorMessage=driver.find_element(By.CSS_SELECTOR,"h3[data-test='error']")
         print(errorMessage.text)
         testResult=errorMessage.text=="Epic sadface: Sorry, this user has been locked out."
@@ -70,15 +68,13 @@ class Test_SauceDemo:
         sleep(1)
         passwordInput.send_keys("secret_sauce")
         loginButton.click()
-        sleep(2)
-        # driver.find_element_by_css_selector("h3[data-test='error']")  bunu çalıştıramadım. nedenini bulamadım.
+        sleep(2) 
         listOfProducts=driver.find_elements(By.CSS_SELECTOR,"div[class='inventory_item']")
         print(len(listOfProducts))
         testResult=len(listOfProducts)==6
         print(f"Test Sonucu: {testResult}")
 
-      
-
+ 
 testClass=Test_SauceDemo()
 testClass.test_blank_login()
 sleep(2)
