@@ -6,7 +6,7 @@ from selenium.webdriver.support import expected_conditions as ec  #
 from selenium.webdriver.common.action_chains import ActionChains
 import pytest
 
-class Test_SauceDemo2:
+class Test_Odev:
 
     def setup_method(self):
         self.driver=webdriver.Chrome()
@@ -89,6 +89,28 @@ class Test_SauceDemo2:
         
         errorMesssage=WebDriverWait(self.driver,5).until(ec.visibility_of_element_located((By.XPATH,"//*[@id='login_button_container']/div/form/div[3]/h3")))
         assert errorMesssage.text=="Epic sadface: Username and password do not match any user in this service"
+
+    def test_addToCartProduct(self):
+        self.driver.get("https://www.saucedemo.com/")
+        userNameInput=WebDriverWait(self.driver,5).until(ec.visibility_of_element_located((By.ID,"user-name")))
+        passwordInput=WebDriverWait(self.driver,5).until(ec.visibility_of_element_located((By.ID,"password")))
+        loginButton=WebDriverWait(self.driver,5).until(ec.visibility_of_element_located((By.ID,"login-button")))
+        actions=ActionChains(self.driver)
+        actions.send_keys_to_element(userNameInput,"standard_user")
+        actions.send_keys_to_element(passwordInput,"secret_sauce")
+        actions.click(loginButton)
+        actions.perform()
+        item=WebDriverWait(self.driver,5).until(ec.visibility_of_element_located((By.CSS_SELECTOR,"#add-to-cart-sauce-labs-bike-light")))
+        item.click()
+        cartButton=WebDriverWait(self.driver,5).until(ec.visibility_of_element_located((By.CSS_SELECTOR,".shopping_cart_badge")))
+        cart_button_text=cartButton.text
+        print("Cart Button Text:", cart_button_text)
+        assert cartButton.text=="1"
+
+    
+
+        
+
     
 
 
