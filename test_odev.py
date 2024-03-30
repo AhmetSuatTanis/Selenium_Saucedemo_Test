@@ -5,6 +5,7 @@ from selenium.webdriver.support.wait import WebDriverWait  #ilgili driverı bekl
 from selenium.webdriver.support import expected_conditions as ec  #
 from selenium.webdriver.common.action_chains import ActionChains
 import pytest
+import openpyxl
 
 
 class Test_Odev:
@@ -71,6 +72,7 @@ class Test_Odev:
 
     def getData():
         return [("ahmet","12345"),("naber","5341231"),("Ahmet Suat Tanis","secret_sauce")]
+    
 
     
     @pytest.mark.parametrize("username,password",getData())  
