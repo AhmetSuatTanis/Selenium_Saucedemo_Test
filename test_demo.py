@@ -9,9 +9,7 @@ import openpyxl
 from constants.globalConstants import *
 
 class Test_Demo:
-    def deneme():
-        print("deneme")
-
+    
     #pytest tarafından tanımlanan bir method 
     #her test öncesi otomatik olarak çalıştırılır
     def setup_method(self):
@@ -33,8 +31,8 @@ class Test_Demo:
         return [("1","1"),("abc","123"),("deneme","secret_sauce")]
     
     def readInvalidDataFromExcel():
-        excelFile = openpyxl.load_workbook("data/invalidLogin.xlsx")
-        sheet = excelFile["Sheet1"]
+        excelFile = openpyxl.load_workbook("data/invalidCredentials.xlsx")
+        sheet = excelFile["sheet1"]
         rows = sheet.max_row #kaçıncı satıra kadar benim verim var
         data = []
         for i in range(2,rows+1):
@@ -56,8 +54,8 @@ class Test_Demo:
         loginButton = self.waitForElementVisible((By.ID,login_button_id))
         loginButton.click()
         #errorMessage =WebDriverWait(self.driver,5).until(ec.visibility_of_element_located((By.XPATH,errorMessage_xpath)))
-        errorMessage = self.waitForElementVisible((By.ID,errorMessage_xpath))
-        assert errorMessage.text == errorMessage_text
+        errorMessage = self.waitForElementVisible((By.XPATH,errorMessage_xpath))
+        assert errorMessage.text == errorMessage4_text
 
     def test_valid_login(self):
         self.driver.get("https://www.saucedemo.com/")
@@ -73,7 +71,7 @@ class Test_Demo:
         assert baslik.text == "Swag Labs"
         
     def waitForElementVisible(self,locator,timeout=5):
-        WebDriverWait(self.driver,timeout).until(ec.visibility_of_element_located(locator))
+        return WebDriverWait(self.driver,timeout).until(ec.visibility_of_element_located(locator))
         
 
         

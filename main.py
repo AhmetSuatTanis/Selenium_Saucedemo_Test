@@ -7,6 +7,8 @@ driver.maximize_window()
 driver.get("https://www.google.com.tr/")
 sleep(2)
 
+type(By.ID)
+
 input=driver.find_element(By.CLASS_NAME,"gLFyf")
 input.send_keys("kodlama.io")
 sleep(2)
@@ -22,6 +24,8 @@ sleep(3)
 
 listOfCourse=driver.find_elements(By.CLASS_NAME,"col-xs-12.col-sm-6.col-md-4")
 print(f"Kodlama.io sitesinde {len(listOfCourse)} adet kurs vardir.")
+
+ 
 
 
 

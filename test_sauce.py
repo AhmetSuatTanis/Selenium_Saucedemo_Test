@@ -8,10 +8,10 @@ import pytest
 #bir zincir misali aksiyonları sıraya koyma
 
 class Test_Sauce:
-    # def __init__(self):
-    #     self.driver=webdriver.Chrome()
-    #     self.driver.maximize_window()
-    #     self.driver.get("https://www.saucedemo.com/")
+    def __init__(self):
+        self.driver=webdriver.Chrome()
+        self.driver.maximize_window()
+        self.driver.get("https://www.saucedemo.com/")
 
     def test_invalid_login(self):
         userNameInput=WebDriverWait(self.driver,5).until(ec.visibility_of_element_located((By.ID,"user-name")))
@@ -47,6 +47,6 @@ class Test_Sauce:
         removeButton=WebDriverWait(self.driver,5).until(ec.visibility_of_element_located((By.XPATH,"//*[@id='remove-test.allthethings()-t-shirt-(red)']")))
         testResult=removeButton.text=="Remove"
         print(f"Test Sonucu: {testResult}")
-        sleep(5)
+        sleep(2)
 
 
