@@ -91,6 +91,23 @@ class Test_Odev:
 
     def getData(): #bunu iptal ettik excelden çektik artık
         return [("ahmet","12345"),("naber","5341231"),("Ahmet Suat Tanis","secret_sauce")]
+    
+    @pytest.mark.parametrize("username,password", getData())  
+    def test_invalid_login_with_data(self,username,password):
+        #userNameInput=WebDriverWait(self.driver,5).until(ec.visibility_of_element_located((By.ID,username_id)))
+        userNameInput=self.waitForElementVisible((By.ID,username_id))
+        #passwordInput=WebDriverWait(self.driver,5).until(ec.visibility_of_element_located((By.ID,password_id)))
+        passwordInput=self.waitForElementVisible((By.ID,password_id))
+        #loginButton=WebDriverWait(self.driver,5).until(ec.visibility_of_element_located((By.ID,login_button_id)))
+        loginButton=self.waitForElementVisible((By.ID,login_button_id))
+        actions=ActionChains(self.driver)
+        actions.send_keys_to_element(userNameInput,username)
+        actions.send_keys_to_element(passwordInput,password)
+        actions.click(loginButton)
+        actions.perform()
+        #errorMessage4=WebDriverWait(self.driver,5).until(ec.visibility_of_element_located((By.XPATH,errorMessage_xpath)))
+        errorMessage4=self.waitForElementVisible((By.XPATH,errorMessage_xpath))
+        assert errorMessage4.text == errorMessage4_text
 
     def readInvalidDataFromExcel():
         excelFile = openpyxl.load_workbook("data/invalidCredentials.xlsx") #dosyanın nerde olduğunu gösterdik data klasöründe 
@@ -107,7 +124,7 @@ class Test_Odev:
 
 
     @pytest.mark.parametrize("username,password",readInvalidDataFromExcel())  
-    def test_invalid_login(self,username,password):
+    def test_invalid_login_with_excel(self,username,password):
         #userNameInput=WebDriverWait(self.driver,5).until(ec.visibility_of_element_located((By.ID,username_id)))
         userNameInput=self.waitForElementVisible((By.ID,username_id))
         #passwordInput=WebDriverWait(self.driver,5).until(ec.visibility_of_element_located((By.ID,password_id)))
@@ -119,7 +136,8 @@ class Test_Odev:
         actions.send_keys_to_element(passwordInput,password)
         actions.click(loginButton)
         actions.perform()
-        errorMessage4=WebDriverWait(self.driver,5).until(ec.visibility_of_element_located((By.XPATH,errorMessage_xpath)))
+        #errorMessage4=WebDriverWait(self.driver,5).until(ec.visibility_of_element_located((By.XPATH,errorMessage_xpath)))
+        errorMessage4=self.waitForElementVisible((By.XPATH,errorMessage_xpath))
         assert errorMessage4.text == errorMessage4_text
 
     
@@ -181,9 +199,11 @@ class Test_Odev:
         actions.send_keys_to_element(passwordInput,password)
         actions.click(loginButton)
         actions.perform()
-        item4=WebDriverWait(self.driver,5).until(ec.visibility_of_element_located((By.NAME,item4_name)))
+        #item4=WebDriverWait(self.driver,5).until(ec.visibility_of_element_located((By.NAME,item4_name)))
+        item4=self.waitForElementVisible((By.NAME,item4_name))
         item4.click()
-        item5=WebDriverWait(self.driver,5).until(ec.visibility_of_element_located((By.CSS_SELECTOR,item5_CSS)))
+        #item5=WebDriverWait(self.driver,5).until(ec.visibility_of_element_located((By.CSS_SELECTOR,item5_CSS)))
+        item5=self.waitForElementVisible((By.CSS_SELECTOR,item5_CSS))
         item5.click()
         #cartButton=WebDriverWait(self.driver,5).until(ec.visibility_of_element_located((By.XPATH,cartButton_xpath)))
         cartButton=self.waitForElementVisible((By.XPATH,cartButton_xpath))
