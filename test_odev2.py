@@ -7,6 +7,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 import pytest
 import openpyxl
 from constants.globalConstants import *
+import json 
 
 
 class Test_Odev:
@@ -153,7 +154,8 @@ class Test_Odev:
         actions.send_keys_to_element(passwordInput,password)
         actions.click(loginButton)
         actions.perform()
-        item1=WebDriverWait(self.driver,5).until(ec.visibility_of_element_located((By.NAME,item1_name)))
+        #item1=WebDriverWait(self.driver,5).until(ec.visibility_of_element_located((By.NAME,item1_name)))
+        item1=self.waitForElementVisible((By.NAME,item1_name))
         item1.click()
         #cartButton=WebDriverWait(self.driver,5).until(ec.visibility_of_element_located((By.CSS_SELECTOR,cartButton_CSS)))
         cartButton=self.waitForElementVisible((By.CSS_SELECTOR,cartButton_CSS))
@@ -171,10 +173,10 @@ class Test_Odev:
         actions.send_keys_to_element(passwordInput,password)
         actions.click(loginButton)
         actions.perform()
-        #item1=WebDriverWait(self.driver,5).until(ec.visibility_of_element_located((By.NAME,item1_name)))
+        #item2=WebDriverWait(self.driver,5).until(ec.visibility_of_element_located((By.NAME,item2_name)))
         item2=self.waitForElementVisible((By.NAME,item2_name))
         item2.click()
-        #item2=WebDriverWait(self.driver,5).until(ec.visibility_of_element_located((By.CSS_SELECTOR,item2_CSS)))
+        #item3=WebDriverWait(self.driver,5).until(ec.visibility_of_element_located((By.CSS_SELECTOR,item3_CSS)))
         item3=self.waitForElementVisible((By.CSS_SELECTOR,item3_CSS))
         item3.click()
         #cartButton=WebDriverWait(self.driver,5).until(ec.visibility_of_element_located((By.XPATH,cartButton_xpath)))
@@ -235,6 +237,35 @@ class Test_Odev:
 
     def waitForElementVisible(self,locator,timeout=5):
         return WebDriverWait(self.driver,timeout).until(ec.visibility_of_element_located(locator))
+    
+
+    def readInvalidDataFromJSON(json_file_path):
+     with open(json_file_path, 'r') as file:
+        data = json.load(file)
+        invalid_users = data.get('invalid_credentials', [])
+        return [(user.get('username'), user.get('password')) for user in invalid_users]
+    
+    @pytest.mark.parametrize("username, password", readInvalidDataFromJSON("data/invalidCredentials.json"))
+    def test_invalid_login_with_json(self,username,password):
+        #userNameInput=WebDriverWait(self.driver,5).until(ec.visibility_of_element_located((By.ID,username_id)))
+        userNameInput=self.waitForElementVisible((By.ID,username_id))
+        #passwordInput=WebDriverWait(self.driver,5).until(ec.visibility_of_element_located((By.ID,password_id)))
+        passwordInput=self.waitForElementVisible((By.ID,password_id))
+        #loginButton=WebDriverWait(self.driver,5).until(ec.visibility_of_element_located((By.ID,login_button_id)))
+        loginButton=self.waitForElementVisible((By.ID,login_button_id))
+        actions=ActionChains(self.driver)
+        actions.send_keys_to_element(userNameInput,username)
+        actions.send_keys_to_element(passwordInput,password)
+        actions.click(loginButton)
+        actions.perform()
+        #errorMessage4=WebDriverWait(self.driver,5).until(ec.visibility_of_element_located((By.XPATH,errorMessage_xpath)))
+        errorMessage4=self.waitForElementVisible((By.XPATH,errorMessage_xpath))
+        assert errorMessage4.text == errorMessage4_text
+    
+    
+
+    
+
     
 
     
