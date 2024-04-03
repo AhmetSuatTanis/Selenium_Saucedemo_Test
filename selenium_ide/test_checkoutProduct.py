@@ -18,9 +18,9 @@ class TestTestcheckoutProduct():
   def teardown_method(self, method):
     self.driver.quit()
   
-  def test_testcheckoutProduct(self):
+  def test_checkoutProduct(self):
     self.driver.get("https://www.saucedemo.com/")
-    self.driver.set_window_size(1936, 1056)
+    self.driver.maximize_window()
     WebDriverWait(self.driver, 5).until(expected_conditions.visibility_of_element_located((By.CSS_SELECTOR, "*[data-test=\"username\"]")))
     self.driver.find_element(By.CSS_SELECTOR, "*[data-test=\"username\"]").click()
     self.driver.find_element(By.CSS_SELECTOR, "*[data-test=\"username\"]").send_keys("standard_user")

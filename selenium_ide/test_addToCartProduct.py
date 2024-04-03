@@ -10,7 +10,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
-class TestTestvalidlogin():
+class Test_AddToCartProduct():
   def setup_method(self, method):
     self.driver = webdriver.Chrome()
     self.vars = {}
@@ -18,9 +18,9 @@ class TestTestvalidlogin():
   def teardown_method(self, method):
     self.driver.quit()
   
-  def test_testvalidlogin(self):
+  def test_addToCartProduct(self):
     self.driver.get("https://www.saucedemo.com/")
-    self.driver.set_window_size(1936, 1056)
+    self.driver.maximize_window()
     WebDriverWait(self.driver, 5).until(expected_conditions.visibility_of_element_located((By.CSS_SELECTOR, "*[data-test=\"username\"]")))
     self.driver.find_element(By.CSS_SELECTOR, "*[data-test=\"username\"]").click()
     self.driver.find_element(By.CSS_SELECTOR, "*[data-test=\"username\"]").send_keys("standard_user")
@@ -29,7 +29,9 @@ class TestTestvalidlogin():
     self.driver.find_element(By.CSS_SELECTOR, "*[data-test=\"password\"]").send_keys("secret_sauce")
     WebDriverWait(self.driver, 5).until(expected_conditions.visibility_of_element_located((By.CSS_SELECTOR, "*[data-test=\"login-button\"]")))
     self.driver.find_element(By.CSS_SELECTOR, "*[data-test=\"login-button\"]").click()
-    WebDriverWait(self.driver, 5).until(expected_conditions.visibility_of_element_located((By.CSS_SELECTOR, ".app_logo")))
-    assert self.driver.find_element(By.CSS_SELECTOR, ".app_logo").text == "Swag Labs"
+    WebDriverWait(self.driver, 5).until(expected_conditions.visibility_of_element_located((By.ID, "add-to-cart-sauce-labs-backpack")))
+    self.driver.find_element(By.ID, "add-to-cart-sauce-labs-backpack").click()
+    WebDriverWait(self.driver, 5).until(expected_conditions.visibility_of_element_located((By.CSS_SELECTOR, "*[data-test=\"shopping-cart-link\"]")))
+    assert self.driver.find_element(By.CSS_SELECTOR, "*[data-test=\"shopping-cart-link\"]").text == "1"
     self.driver.close()
   
