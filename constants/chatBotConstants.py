@@ -35,9 +35,10 @@ yesButton_CSS="button:nth-child(1)"
 commentInputBox_CSS="#surveyTextArea"
 commentMessage="Her şey için teşekkürler."
 commentSendButton_CSS="#surveyBtn"
+addFileButton_CSS=".exw-add-file > svg > path"
+chooseFileButton_CSS=".exw-drag-drop-buttons > button"
+dosyayisuruklevebiraktext_CSS="[role='presentation'] > p"
+sendButtonForFile_CSS=".exw-uploaded-file-name + button"
 
 
-
-
-
-
+"exw-conversation-container-frame"
