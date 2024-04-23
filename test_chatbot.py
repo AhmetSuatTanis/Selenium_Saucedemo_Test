@@ -4,11 +4,7 @@ from time import sleep
 import json
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from constants.chatBotConstants import *
 from selenium.webdriver.support import expected_conditions as ec
 
@@ -61,6 +57,38 @@ class TestWwwwwww():
     lastResponseMessage=self.waitForElementVisible((By.XPATH,actualLastResponseMessage_xpath))
     assert expectedLastResponseMessage in lastResponseMessage.text
     #chatbotun kapatılması kısmı dahil değil şu anda 
+    minimizeButton=self.waitForElementVisible((By.CSS_SELECTOR,minimizeButton_CSS))
+    minimizeButton.click()
+    sleep(2)
+    #mesajlaşma içindeydik , default ana iframe e geri dönüş yapıyoruz.
+    self.driver.switch_to.default_content()
+    #Tekrar chat botu açmak için ana iframe içine inip tekrar chat bot iframe'mini seçiyoruz.
+    self.waitForElementAvailableForIFrame((By.XPATH,chatBot_Iframe_xpath))
+    self.waitForElementVisible((By.XPATH, chatBot_xpath)).click()
+    #chat bot kısmından ana default iframe içine geri dönüyoruz.
+    self.driver.switch_to.default_content()
+    #default iframe den mesajlaşma iframe ine giriş yapıyoruz.
+    self.waitForElementAvailableForIFrame((By.XPATH,chatBotMessageBox_Iframe_xpath))
+    sleep(2)
+    self.waitForElementVisible((By.CSS_SELECTOR,closeButton_CSS)).click()
+    sleep(2)
+    self.waitForElementVisible((By.CSS_SELECTOR,noButton_CSS)).click()
+    sleep(2)
+    self.waitForElementVisible((By.CSS_SELECTOR,closeButton_CSS)).click()
+    sleep(2)
+    self.waitForElementVisible((By.CSS_SELECTOR,yesButton_CSS)).click()
+    sleep(3)
+    self.waitForElementVisible((By.CSS_SELECTOR,commentInputBox_CSS)).send_keys(commentMessage)
+    self.waitForElementVisible((By.CSS_SELECTOR,commentSendButton_CSS)).click()
+    sleep(5)
+
+
+
+
+
+    
+
+
 
 
 

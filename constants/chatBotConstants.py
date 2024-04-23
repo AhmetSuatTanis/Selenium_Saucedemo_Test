@@ -28,7 +28,13 @@ yesButton_xpath="//div[@class='exw-replies']/div[contains(text(),'Evet')]"
 noButton_xpath="//div[@class='exw-replies']/div[contains(text(),'Hayır')]"
 actualLastResponseMessage_xpath="//div[@class='exw-sender-response']/p[contains(text(),'Sorun olursa her zaman burdayım')]"
 expectedLastResponseMessage="Sorun olursa her zaman burdayım"
-
+minimizeButton_CSS="path:nth-child(2)"
+closeButton_CSS=".exw-end-session-button > path"
+noButton_CSS="button:nth-child(2)"
+yesButton_CSS="button:nth-child(1)"
+commentInputBox_CSS="#surveyTextArea"
+commentMessage="Her şey için teşekkürler."
+commentSendButton_CSS="#surveyBtn"
 
 
 
