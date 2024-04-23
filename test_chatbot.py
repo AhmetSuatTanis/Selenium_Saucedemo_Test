@@ -9,13 +9,14 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-from constants.loginConstants import *
+from constants.chatBotConstants import *
 from selenium.webdriver.support import expected_conditions as ec
 
 class TestWwwwwww():
-  def setup_method(self, method):
-    self.driver = webdriver.Chrome()
-    self.vars = {}
+  def setup_method(self):
+      self.driver=webdriver.Chrome()
+      self.driver.maximize_window()
+      self.driver.get(giris_URL)
   
   def teardown_method(self, method):
     self.driver.quit()
@@ -27,41 +28,39 @@ class TestWwwwwww():
       return WebDriverWait(self.driver, timeout).until(ec.frame_to_be_available_and_switch_to_it(locator))
   
   def test_wwwwwww(self):
-    self.driver.get("https://tobeto.com/giris")
-    self.driver.maximize_window()
-    self.waitForElementAvailableForIFrame((By.XPATH,"//iframe[@class='exw-launcher-frame animated bounce']"))
-    self.waitForElementVisible((By.XPATH, "//*[@id='launcher']/div")).click()
+    self.waitForElementAvailableForIFrame((By.XPATH,chatBot_Iframe_xpath))
+    self.waitForElementVisible((By.XPATH, chatBot_xpath)).click()
     self.driver.switch_to.default_content()
-    self.waitForElementAvailableForIFrame((By.XPATH,"//*[@id='exw-conversation-frame']"))
-    messageBox=self.waitForElementVisible((By.XPATH,"//*[@id='exw-conversation-frame-body']/div/div/div/div[3]/form/textarea"))
-    messageBox.send_keys("Selam")
-    sendButton=self.waitForElementVisible((By.XPATH,"//*[@id='exw-conversation-frame-body']/div/div/div/div[3]/form/div/button"))
+    self.waitForElementAvailableForIFrame((By.XPATH,chatBotMessageBox_Iframe_xpath))
+    messageBox=self.waitForElementVisible((By.XPATH,messageInputBox_xpath))
+    messageBox.send_keys(messageText)
+    sendButton=self.waitForElementVisible((By.XPATH,messageSendButton_xpath))
     sendButton.click()
-    # sendButton = WebDriverWait(self.driver, timeout=10).until(ec.presence_of_element_located((By.XPATH, "//*[@id='exw-conversation-frame-body']/div/div/div/div[3]/form/div/button")))
-    assert self.waitForElementVisible((By.XPATH, "//h4[contains(.,'Tobeto Yardım')]")).text=="Tobeto Yardım"
-    assert "Merhabalar, Tobeto'ya hoş geldiniz." in self.waitForElementVisible((By.XPATH,"//div[@id='exw-messages']/div/div/div/div/div/div/p")).text
-    self.waitForElementVisible((By.XPATH,"//*[@id='exw-messages']/div[3]/div[2]/div[2]/input")).send_keys("Ahmet Suat")
-    self.waitForElementVisible((By.CSS_SELECTOR,".exw-inline-response-input-container > svg")).click()
+    assert self.waitForElementVisible((By.XPATH,actualTitleOfMessageBox_xpath )).text==expectedTitleOfMessageBox
+    assert expectedWelcomeMessage in self.waitForElementVisible((By.XPATH,actualWelcomeMessage_xpath)).text
+    self.waitForElementVisible((By.XPATH,nameInputBox_xpath)).send_keys(name)
+    self.waitForElementVisible((By.CSS_SELECTOR,nameSendButton_CSS)).click()
     #Normalde "Ahmet Suat" yazdığım için bana Memnun oldum Ahmet yazması gerekirken. ilk girdiğim "Selam" yazısı ile bana Memnun oldum Selam diyor.
     #Selam yazısını adım gibi alıp kullanıyor. Bug var burada
-    assert "Memnun oldum" in self.waitForElementVisible((By.XPATH,"//*[@id='exw-messages']/div[4]/div/div/div/div[1]/div/div")).text
-    topicSelection=self.waitForElementVisible((By.XPATH,"//*[@id='exw-messages']/div[4]/div/div/div/div[2]/div/div/div[1]"))
+    assert expectedGreetingMessage in self.waitForElementVisible((By.XPATH,actualGreetingMessage_xpath)).text
+    topicSelection=self.waitForElementVisible((By.XPATH,topicSelection_xpath))
     topicSelection.click()
-    assert "Tobeto; " in self.waitForElementVisible((By.XPATH,"//div[@class='exw-sender-response']/p[contains(text(),'Tobeto;')]")).text
-    topicSelection2=self.waitForElementVisible((By.XPATH,"//div[@class='exw-reply'][contains(text(),'Eğitimlerimiz')]"))
+    assert expectedSelectionMessage in self.waitForElementVisible((By.XPATH,actualSelectionMessage_xpath)).text
+    topicSelection2=self.waitForElementVisible((By.XPATH,topicSelection2_xpath))
     topicSelection2.click()
-    assert "Aşağıdaki konu başlıkları için sana yardımcı olabilirim. 😊" in self.waitForElementVisible((By.XPATH,"//*[@id='exw-messages']/div[8]/div/div/div/div[1]/div/div")).text
-    topicSelection3=self.waitForElementVisible((By.XPATH,"//*[@id='exw-messages']/div[8]/div/div/div/div[2]/div/div/div[1]"))
+    assert expectedEducationsMessage in self.waitForElementVisible((By.XPATH,actualEducationsMessage_xpath)).text
+    topicSelection3=self.waitForElementVisible((By.XPATH,topicSelection3_xpath))
     topicSelection3.click()
-    egitimler=["Dijital Gelişim","Profesyonel Gelişim","Yönetsel Gelişim"]
+    expectedEducations=["Dijital Gelişim","Profesyonel Gelişim","Yönetsel Gelişim"]
     #Bu kod, egitimler listesindeki her bir öğeyi self.waitForElementVisible(...).text stringinde arar. Tüm öğeler bulunursa True döner, aksi halde False döner. all fonksiyonu ise bu sonuçları birleştirir ve eğer tüm öğeler bulunursa True, aksi halde False döner.
-    assert all(egitim in self.waitForElementVisible((By.XPATH,"//*[@id='exw-messages']/div[10]/div[1]/div/div")).text for egitim in egitimler)
-    assert "Yardımcı olmamı istediğiniz başka bir konu var mı?" == self.waitForElementVisible((By.XPATH,"//div[@class='exw-message-text']/div[contains(text(),'Yardımcı')]")).text
-    yesButton=self.waitForElementVisible((By.XPATH,"//div[@class='exw-replies']/div[contains(text(),'Evet')]"))
-    noButton=self.waitForElementVisible((By.XPATH,"//div[@class='exw-replies']/div[contains(text(),'Hayır')]"))
+    assert all(education in self.waitForElementVisible((By.XPATH,actualEducationsList_xpath)).text for education in expectedEducations)
+    assert expectedHelpMessage == self.waitForElementVisible((By.XPATH,actualHelpMessage_xpath)).text
+    yesButton=self.waitForElementVisible((By.XPATH,yesButton_xpath))
+    noButton=self.waitForElementVisible((By.XPATH,noButton_xpath))
     noButton.click()
-    lastResponseMessage=self.waitForElementVisible((By.XPATH,"//div[@class='exw-sender-response']/p[contains(text(),'Sorun olursa her zaman burdayım')]"))
-    assert "Sorun olursa her zaman burdayım" in lastResponseMessage.text
+    lastResponseMessage=self.waitForElementVisible((By.XPATH,actualLastResponseMessage_xpath))
+    assert expectedLastResponseMessage in lastResponseMessage.text
+    #chatbotun kapatılması kısmı dahil değil şu anda 
 
 
 
