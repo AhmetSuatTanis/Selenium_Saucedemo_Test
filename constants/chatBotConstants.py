@@ -40,5 +40,3 @@ chooseFileButton_CSS=".exw-drag-drop-buttons > button"
 dosyayisuruklevebiraktext_CSS="[role='presentation'] > p"
 sendButtonForFile_CSS=".exw-uploaded-file-name + button"
 
-
-"exw-conversation-container-frame"

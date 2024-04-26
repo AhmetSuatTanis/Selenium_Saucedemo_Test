@@ -46,9 +46,6 @@ reCAPTHCHA_errorMessage_CSS=".rc-anchor-error-msg"
 reCAPTHCHA_errorMessage="Verification expired. Check the checkbox again."
 reCAPTHCHA_errorMessage_xpath="//div[@id='rc-anchor-container']//span[@class='rc-anchor-error-msg']"
 
-#//*[@id="rc-anchor-container"]/div[2]/span
-#.rc-anchor-error-msg
-#//div[@id='rc-anchor-container']//span[@class='rc-anchor-error-msg']
 
 
 

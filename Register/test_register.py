@@ -59,8 +59,6 @@ class Test_Register:
         self.waitForElementAvailableForIFrame((By.XPATH,reCAPTHCHA_iframe_xpath))
         reCAPTHCHA=self.waitForElementClickable((By.CLASS_NAME, "recaptcha-checkbox-border"))
         reCAPTHCHA.click()
-        #WebDriverWait(self.driver, 10).until(ec.frame_to_be_available_and_switch_to_it((By.XPATH, "//iframe[starts-with(@name, 'a-') and starts-with(@src, 'https://www.google.com/recaptcha')]")))
-        # WebDriverWait(self.driver, 20).until(ec.element_to_be_clickable((By.CLASS_NAME, "recaptcha-checkbox-border"))).click()
         self.driver.switch_to.default_content()
         sleep(15) #reCAPTHCHA için elle müdahele süresi
         continueButton=self.waitForElementVisible((By.CSS_SELECTOR,continueButton_CSS))
