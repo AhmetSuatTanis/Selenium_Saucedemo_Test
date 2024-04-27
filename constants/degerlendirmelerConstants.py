@@ -1,0 +1,8 @@
+giris_URL="https://tobeto.com/giris"
+successPopupMessage_CSS=".btn-close:nth-child(3)"
+degerlendirmelerButonu_xpath="(//li[@class='nav-item'])[3]"
+tobetoBasligiText="Tobeto İşte Başarı Modeli"
+tobetoBasligiText_CSS=".dashboard-card > span"
+baslaButonu_CSS=".btn.btn-primary"
+isteBasariModeli_link="https://tobeto.com/profilim/degerlendirmeler/tobeto-iste-basari-modeli"
+degerlendirmeyeBaslaButonu_CSS=".btn.btn-primary.d-inline-block.mt-8"
