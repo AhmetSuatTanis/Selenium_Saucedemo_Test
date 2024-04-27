@@ -130,7 +130,7 @@ class Test_MyEducation_Life:
         assert successDeleteEducationPopUpText in successDeleteEducationPopUpMessage.text, f"'{successDeleteEducationPopUpText}' ifadesi bulunamadı." 
 
     #Bug , mezuniyet yılı seçildiğinde, devam ediyor butonu pasif hale gelmeliydi.
-    def test_continueButton_with_graduationYear(self):
+    def test_continueButton_with_graduationYear_BUG(self):
         egitimHayatimButonu=self.waitForElementVisible((By.XPATH,egitim_Hayatim_xpath))
         egitimHayatimButonu.click()
         egitimDurumuButonu=self.waitForElementVisible((By.CSS_SELECTOR,egitimDurumu_CSS))
