@@ -57,31 +57,7 @@ class Test_ChatBot:
     noButton.click()
     lastResponseMessage=self.waitForElementVisible((By.XPATH,actualLastResponseMessage_xpath))
     assert expectedLastResponseMessage in lastResponseMessage.text
-    #chatbotun kapatılması kısmı dahil değil şu anda 
-    # minimizeButton=self.waitForElementVisible((By.CSS_SELECTOR,minimizeButton_CSS))
-    # minimizeButton.click()
-    # sleep(2)
-    # #mesajlaşma içindeydik , default ana iframe e geri dönüş yapıyoruz.
-    # self.driver.switch_to.default_content()
-    # #Tekrar chat botu açmak için ana iframe içine inip tekrar chat bot iframe'mini seçiyoruz.
-    # self.waitForElementAvailableForIFrame((By.XPATH,chatBot_Iframe_xpath))
-    # self.waitForElementVisible((By.XPATH, chatBot_xpath)).click()
-    # #chat bot kısmından ana default iframe içine geri dönüyoruz.
-    # self.driver.switch_to.default_content()
-    # #default iframe den mesajlaşma iframe ine giriş yapıyoruz.
-    # self.waitForElementAvailableForIFrame((By.XPATH,chatBotMessageBox_Iframe_xpath))
-    # sleep(2)
-    # self.waitForElementVisible((By.CSS_SELECTOR,closeButton_CSS)).click()
-    # sleep(2)
-    # self.waitForElementVisible((By.CSS_SELECTOR,noButton_CSS)).click()
-    # sleep(2)
-    # self.waitForElementVisible((By.CSS_SELECTOR,closeButton_CSS)).click()
-    # sleep(2)
-    # self.waitForElementVisible((By.CSS_SELECTOR,yesButton_CSS)).click()
-    # sleep(3)
-    # self.waitForElementVisible((By.CSS_SELECTOR,commentInputBox_CSS)).send_keys(commentMessage)
-    # self.waitForElementVisible((By.CSS_SELECTOR,commentSendButton_CSS)).click()
-    # sleep(5)
+    
   
   def test_chatBot_closeButton(self):
     self.test_chatBot_communication()
@@ -111,7 +87,7 @@ class Test_ChatBot:
     sleep(3)
 
   def test_chatBot_clickNo_WithCloseButton(self):
-    Test_ChatBot.test_chatBot_communication(self)
+    self.test_chatBot_communication()
     sleep(2)
     self.waitForElementVisible((By.CSS_SELECTOR,closeButton_CSS)).click()
     sleep(2)
@@ -150,7 +126,7 @@ class Test_ChatBot:
     sendButtonForFile.click()
     uploadedFileName=self.waitForElementVisible((By.LINK_TEXT,"Yazlm_Kalite_ve_Test_Egitim_Mufredat.pdf"))
     #yüklediğim file gerçekten yüklendimi diye verify ettim.
-    assert uploadedFileName.text=="Yazlm_Kalite_ve_Test_Egitim_Mufredat.pdf"
+    assert uploadedFileName.text=="Yazlm_Kalite_ve_Test_Egitim_Mufredat.pdf" , f"Yazlm_Kalite_ve_Test_Egitim_Mufredat.pdf ifadesi bulunamadı."
     sleep(3)
     
 
