@@ -84,7 +84,7 @@ class Test_ChatBot:
     # sleep(5)
   
   def test_chatBot_closeButton(self):
-    Test_ChatBot.test_chatBot_communication(self)
+    self.test_chatBot_communication()
     sleep(2)
     self.waitForElementVisible((By.CSS_SELECTOR,closeButton_CSS)).click()
     sleep(2)
@@ -99,7 +99,7 @@ class Test_ChatBot:
     sleep(5)
 
   def test_chatBot_minimizeButton(self):
-    Test_ChatBot.test_chatBot_communication(self)
+    self.test_chatBot_communication()
     minimizeButton=self.waitForElementVisible((By.CSS_SELECTOR,minimizeButton_CSS))
     minimizeButton.click()
     sleep(2)
