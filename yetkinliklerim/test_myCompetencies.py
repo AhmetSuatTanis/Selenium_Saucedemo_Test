@@ -30,8 +30,8 @@ class Test_Yetkinliklerim:
         successPopupMessageClose.click()
         profilDropdownMenu=self.waitForElementVisible((By.CSS_SELECTOR,profilDropdownMenu_CSS))
         profilDropdownMenu.click()
-        profilBilgileriButton=self.waitForElementVisible((By.XPATH,profilBilgileriButton_xpath))
-        profilBilgileriButton.click()
+        profileInformationButton=self.waitForElementVisible((By.XPATH,profileInformationButton_xpath))
+        profileInformationButton.click()
     
     def teardown_method(self):
         self.driver.quit()
@@ -42,46 +42,52 @@ class Test_Yetkinliklerim:
     def waitForElementsVisible(self, locator, timeout=10):
         return WebDriverWait(self.driver, timeout).until(ec.visibility_of_all_elements_located(locator))
 
-    def test_yetkinlik_ekleme(self):
-        yetkinliklerimButonu=self.waitForElementVisible((By.XPATH,yetkinliklerimButonu_xpath))
-        yetkinliklerimButonu.click()
-        yetkinlikSecmeButonu=self.waitForElementVisible((By.CSS_SELECTOR,yetkinlikSecmeButonu_CSS))
-        yetkinlikSecmeButonu.click()
+    def test_competence_add(self):
+        myCompetenciesButton=self.waitForElementVisible((By.XPATH,myCompetenciesButton_xpath))
+        myCompetenciesButton.click()
+        competencySelectButton=self.waitForElementVisible((By.CSS_SELECTOR,competencySelectButton_CSS))
+        competencySelectButton.click()
         sleep(1)
         #burada locator verirken sona yetkinliklerin hangi sırada olanını eklemek istersem onu eklemiş oldum. "0" ilk sıradaki yetkinliği temsil ediyor.
-        yetkinlikSecme1=self.waitForElementVisible((By.CSS_SELECTOR,secilenYetkinlik_CSS+"0"))
-        yetkinlikSecme1.click()
+        competenceSelection1=self.waitForElementVisible((By.CSS_SELECTOR,competenceSelection1_CSS+"0"))
+        competenceSelection1.click()
         sleep(1)
-        kaydetButonu=self.waitForElementVisible((By.CSS_SELECTOR,kaydetButonu_CSS))
-        kaydetButonu.click()
-        eklenenYetkinlikler=self.waitForElementsVisible((By.CSS_SELECTOR,eklenenYetkinlikler_CSS))
-        assert any("C#" == yetkinlik.text for yetkinlik in eklenenYetkinlikler)
+        saveButton=self.waitForElementVisible((By.CSS_SELECTOR,saveButton_CSS))
+        saveButton.click()
+        actualSuccessfulPopUpMessage=self.waitForElementVisible((By.XPATH,successfulPopUpMessage_xpath))
+        assert expectedSuccessfulPopUpMessage in actualSuccessfulPopUpMessage.text, f"'{expectedSuccessfulDeletePopUpMessage}' ifadesi bulunamadı."
+        sleep(2)
+        addedCompetencies=self.waitForElementsVisible((By.CSS_SELECTOR,addedCompetencies_CSS))
+        assert any("C#" == competence.text for competence in addedCompetencies)
         sleep(2)
 
-    def test_yetkinlik_silme(self):
-        self.test_yetkinlik_ekleme()
-        silmeButonu=self.waitForElementVisible((By.CSS_SELECTOR,silmeButonu_CSS))
-        silmeButonu.click()
-        hayirButonu=self.waitForElementVisible((By.CSS_SELECTOR,hayirButonu_CSS))
-        hayirButonu.click()
-        silmeButonu.click()
-        evetButonu=self.waitForElementVisible((By.CSS_SELECTOR,evetButonu_CSS))
-        evetButonu.click()
+    def test_competence_delete(self):
         sleep(1)
+        self.test_competence_add()
+        deleteButton=self.waitForElementVisible((By.CSS_SELECTOR,deleteButton_CSS))
+        deleteButton.click()
+        noButton=self.waitForElementVisible((By.CSS_SELECTOR,noButton_CSS))
+        noButton.click()
+        deleteButton.click()
+        yesButton=self.waitForElementVisible((By.CSS_SELECTOR,yesButton_CSS))
+        yesButton.click()
+        actualSuccessfulDeletePopUpMessage=self.waitForElementVisible((By.CSS_SELECTOR,successfulDeletePopUpMessage_CSS))
+        assert expectedSuccessfulDeletePopUpMessage in actualSuccessfulDeletePopUpMessage.text, f"'{expectedSuccessfulDeletePopUpMessage}' ifadesi bulunamadı."
+        sleep(2)
         #Bu kod bloğu, belirtilen CSS selector'a sahip bir element bulunamazsa NoSuchElementException veya TimeoutException  hatası alır ve bu durumda True döndürür. 
-        try:
-            element = self.waitForElementVisible((By.CSS_SELECTOR, eklenenYetkinlikler_CSS))
-            assert element.is_displayed()
-        except (NoSuchElementException, TimeoutException):
-            assert True
+        # try:
+        #     element = self.waitForElementVisible((By.CSS_SELECTOR, eklenenYetkinlikler_CSS))
+        #     assert element.is_displayed()
+        # except (NoSuchElementException, TimeoutException):
+        #     assert True
 
     def test_bosBirakilanYerler_hataMesajlari(self):
-        yetkinliklerimButonu=self.waitForElementVisible((By.XPATH,yetkinliklerimButonu_xpath))
-        yetkinliklerimButonu.click()
-        kaydetButonu=self.waitForElementVisible((By.CSS_SELECTOR,kaydetButonu_CSS))
-        kaydetButonu.click()
-        hataMesaji=self.waitForElementVisible((By.CSS_SELECTOR,hataMesaji_CSS))
-        assert hataMesaji_text in hataMesaji.text, f"'{hataMesaji}' ifadesi bulunamadı."
+        myCompetenciesButton=self.waitForElementVisible((By.XPATH,myCompetenciesButton_xpath))
+        myCompetenciesButton.click()
+        saveButton=self.waitForElementVisible((By.CSS_SELECTOR,saveButton_CSS))
+        saveButton.click()
+        errorMessage=self.waitForElementVisible((By.CSS_SELECTOR,errorMessage_CSS))
+        assert expectedErrorMessage in errorMessage.text, f"'{expectedErrorMessage}' ifadesi bulunamadı."
         sleep(2)
         
 
