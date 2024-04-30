@@ -28,8 +28,8 @@ class Test_MyEducation_Life:
         successPopupMessageClose.click()
         profilDropdownMenu=self.waitForElementVisible((By.CSS_SELECTOR,profilDropdownMenu_CSS))
         profilDropdownMenu.click()
-        profilBilgileriButton=self.waitForElementVisible((By.XPATH,profilBilgileriButton_xpath))
-        profilBilgileriButton.click()
+        profileInformationButton=self.waitForElementVisible((By.XPATH,profileInformationButton_xpath))
+        profileInformationButton.click()
     
 
     def teardown_method(self):
@@ -43,12 +43,12 @@ class Test_MyEducation_Life:
 
 
     def test_add_education(self):
-        egitimHayatimButonu=self.waitForElementVisible((By.XPATH,egitim_Hayatim_xpath))
-        egitimHayatimButonu.click()
-        egitimDurumuButonu=self.waitForElementVisible((By.CSS_SELECTOR,egitimDurumu_CSS))
-        egitimDurumuButonu.click()
-        egitimSecimi=self.waitForElementVisible((By.CSS_SELECTOR,egitimSecimi_CSS))
-        egitimSecimi.click()
+        myEducationLifeButton=self.waitForElementVisible((By.XPATH,myEducationLifeButton_xpath))
+        myEducationLifeButton.click()
+        educationStatusButton=self.waitForElementVisible((By.CSS_SELECTOR,educationStatusButton_CSS))
+        educationStatusButton.click()
+        educationChoice=self.waitForElementVisible((By.CSS_SELECTOR,educationChoice_CSS))
+        educationChoice.click()
         universityInputBox=self.waitForElementVisible((By.XPATH,universityInputBox_xpath))
         departmentInputBox=self.waitForElementVisible((By.XPATH,departmentInputBox_xpath))
         startDateInputBox=self.waitForElementVisible((By.XPATH,startDate_xpath))
@@ -71,12 +71,12 @@ class Test_MyEducation_Life:
         sleep(2)
 
     def test_add_continuing_education(self):
-        egitimHayatimButonu=self.waitForElementVisible((By.XPATH,egitim_Hayatim_xpath))
-        egitimHayatimButonu.click()
-        egitimDurumuButonu=self.waitForElementVisible((By.CSS_SELECTOR,egitimDurumu_CSS))
-        egitimDurumuButonu.click()
-        egitimSecimi=self.waitForElementVisible((By.CSS_SELECTOR,egitimSecimi_CSS))
-        egitimSecimi.click()
+        myEducationLifeButton=self.waitForElementVisible((By.XPATH,myEducationLifeButton_xpath))
+        myEducationLifeButton.click()
+        educationStatusButton=self.waitForElementVisible((By.CSS_SELECTOR,educationStatusButton_CSS))
+        educationStatusButton.click()
+        educationChoice=self.waitForElementVisible((By.CSS_SELECTOR,educationChoice_CSS))
+        educationChoice.click()
         universityInputBox=self.waitForElementVisible((By.XPATH,universityInputBox_xpath))
         departmentInputBox=self.waitForElementVisible((By.XPATH,departmentInputBox_xpath))
         startDateInputBox=self.waitForElementVisible((By.XPATH,startDate_xpath))
@@ -97,8 +97,8 @@ class Test_MyEducation_Life:
         assert continueEducationTitle in continueEducationVerify.text, f"'{continueEducationTitle}' ifadesi bulunamadı."
 
     def test_blankSpaces_error_messages(self):
-        egitimHayatimButonu=self.waitForElementVisible((By.XPATH,egitim_Hayatim_xpath))
-        egitimHayatimButonu.click()
+        myEducationLifeButton=self.waitForElementVisible((By.XPATH,myEducationLifeButton_xpath))
+        myEducationLifeButton.click()
         saveButton=self.waitForElementVisible((By.XPATH,saveButton_xpath))
         saveButton.click()
         #liste halinde tüm hata mesajlarını alan locator
@@ -131,12 +131,12 @@ class Test_MyEducation_Life:
 
     #Bug , mezuniyet yılı seçildiğinde, devam ediyor butonu pasif hale gelmeliydi.
     def test_continueButton_with_graduationYear_BUG(self):
-        egitimHayatimButonu=self.waitForElementVisible((By.XPATH,egitim_Hayatim_xpath))
-        egitimHayatimButonu.click()
-        egitimDurumuButonu=self.waitForElementVisible((By.CSS_SELECTOR,egitimDurumu_CSS))
-        egitimDurumuButonu.click()
-        egitimSecimi=self.waitForElementVisible((By.CSS_SELECTOR,egitimSecimi_CSS))
-        egitimSecimi.click()
+        myEducationLifeButton=self.waitForElementVisible((By.XPATH,myEducationLifeButton_xpath))
+        myEducationLifeButton.click()
+        educationStatusButton=self.waitForElementVisible((By.CSS_SELECTOR,educationStatusButton_CSS))
+        educationStatusButton.click()
+        educationChoice=self.waitForElementVisible((By.CSS_SELECTOR,educationChoice_CSS))
+        educationChoice.click()
         universityInputBox=self.waitForElementVisible((By.XPATH,universityInputBox_xpath))
         universityInputBox.send_keys(universityInfo)
         departmentInputBox=self.waitForElementVisible((By.XPATH,departmentInputBox_xpath))
@@ -157,12 +157,12 @@ class Test_MyEducation_Life:
         sleep(2)
 
     def test_max_character_limit(self):
-        egitimHayatimButonu=self.waitForElementVisible((By.XPATH,egitim_Hayatim_xpath))
-        egitimHayatimButonu.click()
-        egitimDurumuButonu=self.waitForElementVisible((By.CSS_SELECTOR,egitimDurumu_CSS))
-        egitimDurumuButonu.click()
-        egitimSecimi=self.waitForElementVisible((By.CSS_SELECTOR,egitimSecimi_CSS))
-        egitimSecimi.click()
+        myEducationLifeButton=self.waitForElementVisible((By.XPATH,myEducationLifeButton_xpath))
+        myEducationLifeButton.click()
+        educationStatusButton=self.waitForElementVisible((By.CSS_SELECTOR,educationStatusButton_CSS))
+        educationStatusButton.click()
+        educationChoice=self.waitForElementVisible((By.CSS_SELECTOR,educationChoice_CSS))
+        educationChoice.click()
         universityInputBox=self.waitForElementVisible((By.XPATH,universityInputBox_xpath))
         universityInputBox.send_keys(max_characterControl_text)
         departmentInputBox=self.waitForElementVisible((By.XPATH,departmentInputBox_xpath))
@@ -183,12 +183,12 @@ class Test_MyEducation_Life:
         assert (maxCharErrorMessage==errorMessage for errorMessage in errorMessages), f"'{maxCharErrorMessage}' ifadesi bulunamadı"
 
     def test_min_character_limit(self):
-        egitimHayatimButonu=self.waitForElementVisible((By.XPATH,egitim_Hayatim_xpath))
-        egitimHayatimButonu.click()
-        egitimDurumuButonu=self.waitForElementVisible((By.CSS_SELECTOR,egitimDurumu_CSS))
-        egitimDurumuButonu.click()
-        egitimSecimi=self.waitForElementVisible((By.CSS_SELECTOR,egitimSecimi_CSS))
-        egitimSecimi.click()
+        myEducationLifeButton=self.waitForElementVisible((By.XPATH,myEducationLifeButton_xpath))
+        myEducationLifeButton.click()
+        educationStatusButton=self.waitForElementVisible((By.CSS_SELECTOR,educationStatusButton_CSS))
+        educationStatusButton.click()
+        educationChoice=self.waitForElementVisible((By.CSS_SELECTOR,educationChoice_CSS))
+        educationChoice.click()
         universityInputBox=self.waitForElementVisible((By.XPATH,universityInputBox_xpath))
         universityInputBox.send_keys(min_characterControl_text)
         departmentInputBox=self.waitForElementVisible((By.XPATH,departmentInputBox_xpath))
@@ -207,6 +207,7 @@ class Test_MyEducation_Life:
         saveButton.click()
         errorMessages=self.waitForElementsVisible((By.CSS_SELECTOR,errorMessages_CSS))
         assert (minCharErrorMessage==errorMessage for errorMessage in errorMessages), f"'{minCharErrorMessage}' ifadesi bulunamadı"
+        sleep(2)
 
 
 

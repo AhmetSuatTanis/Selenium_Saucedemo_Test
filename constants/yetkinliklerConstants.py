@@ -1,7 +1,7 @@
 giris_URL="https://tobeto.com/giris"
 successPopupMessage_CSS=".btn-close:nth-child(3)"
 profilDropdownMenu_CSS=".name"
-profilBilgileriButton_xpath="//a[@class='dropdown-item profil-dropdown']"
+profileInformationButton_xpath="//a[@class='dropdown-item profil-dropdown']"
 yetkinliklerimButonu_xpath="(//span[@class='sidebar-text'])[4]"
 kaydetButonu_CSS=".btn.btn-primary.py-2.mb-3.d-inline-block.mobil-btn"
 yetkinlikSecmeButonu_CSS=".css-1xc3v61-indicatorContainer"
