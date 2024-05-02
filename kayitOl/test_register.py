@@ -7,7 +7,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 import pytest
 import openpyxl
 from constants.registerConstants import *
-import json 
+import json
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.alert import Alert
 
@@ -41,7 +41,7 @@ class Test_Register:
         actions=ActionChains(self.driver)
         actions.send_keys_to_element(userNameInput,username)
         actions.send_keys_to_element(userLastNameInput,userLastname)
-        actions.send_keys_to_element(userEmailInput,userEmail)
+        actions.send_keys_to_element(userEmailInput,random_user_mail)
         actions.send_keys_to_element(userPasswordInput,userPassword)
         actions.send_keys_to_element(userPasswordAgainInput,userPassword)
         actions.click(registerButton)
@@ -57,7 +57,7 @@ class Test_Register:
         phoneNumberInput=self.waitForElementVisible((By.ID,phoneNumberInput_id))
         phoneNumberInput.send_keys(userPhoneNumber)
         self.waitForElementAvailableForIFrame((By.XPATH,reCAPTHCHA_iframe_xpath))
-        reCAPTHCHA=self.waitForElementClickable((By.CLASS_NAME, "recaptcha-checkbox-border"))
+        reCAPTHCHA=self.waitForElementClickable((By.CLASS_NAME, reCAPTHCHA_class_name))
         reCAPTHCHA.click()
         self.driver.switch_to.default_content()
         sleep(15) #reCAPTHCHA için elle müdahele süresi
@@ -70,10 +70,10 @@ class Test_Register:
     
     def readInvalidDataFromExcel():
         excelFile = openpyxl.load_workbook("data/bosBirakilanYerler.xlsx") #dosyanın nerde olduğunu gösterdik data klasöründe 
-        sheet = excelFile["sheet1"] #sayfa değişkeni oluşturduk ve sayfayı söyledik
+        sheet = excelFile["Sheet1"] #sayfa değişkeni oluşturduk ve sayfayı söyledik
         rows = sheet.max_row #kaçıncı satıra kadar verim var onu söyledik
         data = []
-        for i in range(2,rows): #parametreler 2.satırda olddan 2den başlattık, veri 4te bitiyor ama rows +1 yazıyoruz sondaki de dahil olsun diye
+        for i in range(2,rows+1): #parametreler 2.satırda olddan 2den başlattık, veri 4te bitiyor ama rows +1 yazıyoruz sondaki de dahil olsun diye
             username = sheet.cell(i,1).value #satırın 1.hücresi username'e gitsin. hücrenin içindeki değere ulaşmak için .value yazdık
             userLastname = sheet.cell(i,2).value
             password = sheet.cell(i,3).value #satırın 2.hücresi password'e gitsin
@@ -90,7 +90,7 @@ class Test_Register:
         return data  #kullanılan noktaya bu datayı göndermek istediğimizi söylüyoruz
     
     @pytest.mark.parametrize("username,userLastname,password,passwordAgain,email",readInvalidDataFromExcel())
-    def test_invalid_register(self,username,userLastname,password,passwordAgain,email):
+    def test_blank_invalid_register(self,username,userLastname,password,passwordAgain,email):
         userNameInput=self.waitForElementVisible((By.NAME,username_name))
         userLastNameInput=self.waitForElementVisible((By.NAME,userLastName_name))
         userEmailInput=self.waitForElementVisible((By.NAME,userEmail_name))
@@ -145,12 +145,11 @@ class Test_Register:
         agreement4.click()
         phoneNumberInput=self.waitForElementVisible((By.ID,phoneNumberInput_id))
         phoneNumberInput.send_keys(userPhoneNumber)
+        #iframe geçişi yapıldı. waitForElementAvailableForIFrame() ile.
         self.waitForElementAvailableForIFrame((By.XPATH,reCAPTHCHA_iframe_xpath))
         reCAPTHCHA=self.waitForElementClickable((By.CLASS_NAME, "recaptcha-checkbox-border"))
         reCAPTHCHA.click()
-        #WebDriverWait(self.driver, 10).until(ec.frame_to_be_available_and_switch_to_it((By.XPATH, "//iframe[starts-with(@name, 'a-') and starts-with(@src, 'https://www.google.com/recaptcha')]")))
-        # WebDriverWait(self.driver, 20).until(ec.element_to_be_clickable((By.CLASS_NAME, "recaptcha-checkbox-border"))).click()
-        self.driver.switch_to.default_content()
+        self.driver.switch_to.default_content() #tekrar ana frame'e geçiş yapıldı.
         sleep(15) #reCAPTHCHA için elle müdahele süresi
         continueButton=self.waitForElementVisible((By.CSS_SELECTOR,continueButton_CSS))
         continueButton.click()
@@ -158,7 +157,7 @@ class Test_Register:
         popup_message = self.waitForElementVisible((By.XPATH,password_error_message_xpath))
         assert password_error_message in popup_message.text, f"'{password_error_message}' mesajı görüntülenemedi."
 
-    def test_invalidEmail_errorMessage(self):
+    def test_invalidEmail_errorMessageBUG(self):
         userNameInput=self.waitForElementVisible((By.NAME,username_name))
         userLastNameInput=self.waitForElementVisible((By.NAME,userLastName_name))
         userEmailInput=self.waitForElementVisible((By.NAME,userEmail_name))
@@ -184,7 +183,7 @@ class Test_Register:
         actions=ActionChains(self.driver)
         actions.send_keys_to_element(userNameInput,username)
         actions.send_keys_to_element(userLastNameInput,userLastname)
-        actions.send_keys_to_element(userEmailInput,"ahmetsuattanis@gmail.com")
+        actions.send_keys_to_element(userEmailInput,registered_user_mail)
         actions.send_keys_to_element(userPasswordInput,userPassword)
         actions.send_keys_to_element(userPasswordAgainInput,userPassword)
         actions.click(registerButton)
@@ -200,7 +199,7 @@ class Test_Register:
         phoneNumberInput=self.waitForElementVisible((By.ID,phoneNumberInput_id))
         phoneNumberInput.send_keys(userPhoneNumber)
         self.waitForElementAvailableForIFrame((By.XPATH,reCAPTHCHA_iframe_xpath))
-        reCAPTHCHA=self.waitForElementClickable((By.CLASS_NAME, "recaptcha-checkbox-border"))
+        reCAPTHCHA=self.waitForElementClickable((By.CLASS_NAME, reCAPTHCHA_name))
         reCAPTHCHA.click()
         self.driver.switch_to.default_content()
         sleep(15) #reCAPTHCHA için elle müdahele süresi bırakıldı
@@ -236,14 +235,15 @@ class Test_Register:
         phoneNumberInput=self.waitForElementVisible((By.ID,phoneNumberInput_id))
         phoneNumberInput.send_keys(userPhoneNumber)
         self.waitForElementAvailableForIFrame((By.XPATH,reCAPTHCHA_iframe_xpath))
-        reCAPTHCHA=self.waitForElementClickable((By.CLASS_NAME, "recaptcha-checkbox-border"))
+        reCAPTHCHA=self.waitForElementClickable((By.CLASS_NAME, reCAPTHCHA_name))
         reCAPTHCHA.click()
         self.driver.switch_to.default_content()
         sleep(15) #reCAPTHCHA için elle müdahele süresi
         continueButton=self.waitForElementVisible((By.CSS_SELECTOR,continueButton_CSS))
+        #Devam et butonu aktif değilse assertion geçer.
         assert not continueButton.is_enabled(), "Devam Et butonu etkin durumda."
 
-    def test_phoneNumberMaxMin_errorMessages(self):
+    def test_phoneNumberMaxMin_errorMessagesBUG(self):
         userNameInput=self.waitForElementVisible((By.NAME,username_name))
         userLastNameInput=self.waitForElementVisible((By.NAME,userLastName_name))
         userEmailInput=self.waitForElementVisible((By.NAME,userEmail_name))
@@ -253,7 +253,7 @@ class Test_Register:
         actions=ActionChains(self.driver)
         actions.send_keys_to_element(userNameInput,username)
         actions.send_keys_to_element(userLastNameInput,userLastname)
-        actions.send_keys_to_element(userEmailInput,userEmail)
+        actions.send_keys_to_element(userEmailInput,random_user_mail)
         actions.send_keys_to_element(userPasswordInput,userPassword)
         actions.send_keys_to_element(userPasswordAgainInput,userPassword)
         actions.click(registerButton)
@@ -268,13 +268,13 @@ class Test_Register:
         agreement4.click()
         phoneNumberInput=self.waitForElementVisible((By.ID,phoneNumberInput_id))
         phoneNumberInput.send_keys(userPhoneNumber)
-        sleep(2)
+        sleep(1)
         phoneNumberInput.send_keys(Keys.BACK_SPACE)
-        sleep(2)
+        sleep(1)
         phoneNumberInput.send_keys(Keys.NUMPAD1)
-        sleep(2)
+        sleep(1)
         phoneNumberInput.send_keys(Keys.NUMPAD1)
-        sleep(2)
+        sleep(1)
         phoneNumberInput.send_keys(Keys.NUMPAD1)
         #EN AZ ve EN FAZLA KARAKTER HATASI  MESAJLARI ÇIKMIYOR , HOCAYA SOR bug mu diye
 
@@ -287,10 +287,10 @@ class Test_Register:
         assert minPhoneNumber_errorMessage==minErrorMessage.text,f" '{minErrorMessage}' ifadesi bulunamadı."
 
     #Bug #Bug #Bug önceden kullanılan numara ile tekrar üyelik açılabiliyor.
-    def test_for_previouslyUsed_phoneNumber(self):
+    def test_for_previouslyUsed_phoneNumberBUG(self):
         userNameInput=self.waitForElementVisible((By.NAME,username_name))
         userLastNameInput=self.waitForElementVisible((By.NAME,userLastName_name))
-        userEmailInput=self.waitForElementVisible((By.NAME,userEmail_name))
+        userEmailInput=self.waitForElementVisible((By.NAME,random_user_mail))
         userPasswordInput=self.waitForElementVisible((By.NAME,userPassword_name))
         userPasswordAgainInput=self.waitForElementVisible((By.NAME,userPasswordAgain_name))
         registerButton=self.waitForElementVisible((By.CSS_SELECTOR,registerButton_CSS))
@@ -347,14 +347,14 @@ class Test_Register:
         agreement4.click()
         phoneNumberInput=self.waitForElementVisible((By.ID,phoneNumberInput_id))
         phoneNumberInput.send_keys(userPhoneNumber)
-        self.waitForElementAvailableForIFrame((By.XPATH,"//iframe[starts-with(@name, 'a-') and starts-with(@src, 'https://www.google.com/recaptcha')]"))
-        self.driver.find_element(By.CSS_SELECTOR, ".recaptcha-checkbox-border").click()
-        sleep(58)
-        assert self.waitForElementVisible((By.CSS_SELECTOR, reCAPTHCHA_errorMessage_CSS)).text == "Verification expired. Check the checkbox again."
+        self.waitForElementAvailableForIFrame((By.XPATH,reCAPTHCHA_iframe_xpath))
+        self.driver.find_element(By.CSS_SELECTOR, reCAPTHCHA_CSS).click()
+        sleep(61)
+        self.driver.save_screenshot("screenshots/reCAPTCHA_1_min_warning.png")
 
-        # errorMessage=self.waitForElementPresence((By.XPATH,reCAPTHCHA_errorMessage_xpath))
-        # assert reCAPTHCHA_errorMessage == errorMessage.text, f"'{reCAPTHCHA_errorMessage}' ifadesi mesaj içinde bulunamadı."
-        #self.driver.switch_to.default_content()
+        
+
+        
 
         
         

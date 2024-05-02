@@ -1,8 +1,23 @@
+import random
+import string
+
+def generate_random_string(length):
+    letters_and_digits = string.ascii_letters + string.digits
+    return ''.join(random.choice(letters_and_digits) for _ in range(length))
+
+def generate_random_gmail():
+    username = generate_random_string(10)  # 10 karakterlik rastgele kullanıcı adı
+    domain = "@gmail.com"
+    return username + domain
+
+random_user_mail = generate_random_gmail()
+registered_user_mail="ahmetsuattanis@gmail.com"
+userEmail="ahmetsuattanis91@gmail.com"
+
 register_URL="https://tobeto.com/kayit-ol"
 username="Ahmet Suat"
 userLastname="Tanış"
 userPassword="123456.=."
-userEmail="ahmetsuattanis91@gmail.com"
 userPhoneNumber="5348126342"
 username_name="firstName"
 userLastName_name="lastName"
