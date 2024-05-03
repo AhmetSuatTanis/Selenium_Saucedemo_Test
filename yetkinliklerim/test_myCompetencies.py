@@ -77,12 +77,7 @@ class Test_Yetkinliklerim:
         actualSuccessfulDeletePopUpMessage=self.waitForElementVisible((By.CSS_SELECTOR,successfulDeletePopUpMessage_CSS))
         assert expectedSuccessfulDeletePopUpMessage in actualSuccessfulDeletePopUpMessage.text, f"'{expectedSuccessfulDeletePopUpMessage}' ifadesi bulunamadı."
         sleep(2)
-        #Bu kod bloğu, belirtilen CSS selector'a sahip bir element bulunamazsa NoSuchElementException veya TimeoutException  hatası alır ve bu durumda True döndürür. 
-        # try:
-        #     element = self.waitForElementVisible((By.CSS_SELECTOR, eklenenYetkinlikler_CSS))
-        #     assert element.is_displayed()
-        # except (NoSuchElementException, TimeoutException):
-        #     assert True
+        
 
     def test_bosBirakilanYerler_hataMesajlari(self):
         self.pre_condition()
@@ -93,6 +88,9 @@ class Test_Yetkinliklerim:
         errorMessage=self.waitForElementVisible((By.CSS_SELECTOR,errorMessage_CSS))
         assert expectedErrorMessage in errorMessage.text, f"'{expectedErrorMessage}' ifadesi bulunamadı."
         sleep(2)
+
+
+        
         
 
 
