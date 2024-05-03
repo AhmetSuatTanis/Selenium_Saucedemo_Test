@@ -115,6 +115,7 @@ class Test_Register:
             userEmailInput.send_keys(Keys.CONTROL + "a")  # Tüm metni seç  #Keys metotlarını kullanmak için importunu ekledik.
             userEmailInput.send_keys(Keys.DELETE)         # Sil            #from selenium.webdriver.common.keys import Keys
             sleep(2)
+            self.driver.save_screenshot("screenshots/e-postaUyariMesajiHatasi.png")
             email_error_message_text=self.waitForElementVisible((By.XPATH,email_error_message_xpath))
             assert email_error_message==email_error_message_text.text, f"'{email_error_message}' mesajı görüntülenedi"     
         actions.send_keys_to_element(userPasswordInput,password)
@@ -363,7 +364,7 @@ class Test_Register:
         sleep(15) #reCAPTHCHA için elle müdahele süresi
         continueButton=self.waitForElementVisible((By.CSS_SELECTOR,continueButton_CSS))
         continueButton.click()
-        sleep(1)
+        sleep(0.7)
         self.driver.save_screenshot("screenshots/previouslyUsed_phoneNumber_bug.png")
         successRegisterMessage=self.waitForElementVisible((By.CSS_SELECTOR,successRegisterMessage_CSS))
         #soft assert yapmamam gerekiyor çünkü Bug olduğu için testimin patlaması gerekiyor.
@@ -396,7 +397,7 @@ class Test_Register:
         phoneNumberInput.send_keys(userPhoneNumber)
         self.waitForElementAvailableForIFrame((By.XPATH,reCAPTHCHA_iframe_xpath))
         self.driver.find_element(By.CSS_SELECTOR, reCAPTHCHA_CSS).click()
-        sleep(61)
+        sleep(63)
         self.driver.save_screenshot("screenshots/reCAPTCHA_1_min_warning.png")
 
         

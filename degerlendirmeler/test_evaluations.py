@@ -37,7 +37,7 @@ class Test_Degerlendirmeler:
         # actions.send_keys_to_element(emailInput,userEmail)
         # actions.send_keys_to_element(passwordInput,userPassword)
         #ilk test case çalışırken bu yorum satırını aktif et üstteki 2 satırı deaktif et !!!!
-        actions.send_keys_to_element(emailInput,"telefal158@em2lab.com")
+        actions.send_keys_to_element(emailInput,"vicihi7697@agafx.com")
         actions.send_keys_to_element(passwordInput,"Ahmet=12345")
         actions.click(loginButton)
         actions.perform()

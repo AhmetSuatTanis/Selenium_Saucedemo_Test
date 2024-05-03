@@ -40,6 +40,7 @@ class Test_ChatBot:
     #Normalde "Ahmet Suat" yazdığım için bana Memnun oldum Ahmet yazması gerekirken. ilk girdiğim "Selam" yazısı ile bana Memnun oldum Selam diyor.
     #Selam yazısını adım gibi alıp kullanıyor. Bug var burada
     assert expectedGreetingMessage in self.waitForElementVisible((By.XPATH,actualGreetingMessage_xpath)).text
+    self.driver.save_screenshot("screenshots/selamlamaHatasi.png")
     topicSelection=self.waitForElementVisible((By.XPATH,topicSelection_xpath))
     topicSelection.click()
     assert expectedSelectionMessage in self.waitForElementVisible((By.XPATH,actualSelectionMessage_xpath)).text

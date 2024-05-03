@@ -66,9 +66,10 @@ class Test_MyEducation_Life:
         actions.perform()
         saveButton.click()
         assert successPopUpMessage in self.waitForElementVisible((By.CSS_SELECTOR,successPopUpMessage_CSS)).text  , f"'{successPopUpMessage}' ifadesi bulunamadı."
+        sleep(1)
         educationVerify=self.waitForElementVisible((By.CSS_SELECTOR,educationVerify_CSS))
         assert educationVerify.text==universityInfo,f"'{universityInfo}' ifadesi bulunamadı."
-        sleep(2)
+        sleep(3)
 
     def test_add_continuing_education(self):
         myEducationLifeButton=self.waitForElementVisible((By.XPATH,myEducationLifeButton_xpath))
@@ -93,6 +94,7 @@ class Test_MyEducation_Life:
         actions.perform()
         saveButton.click()
         assert successPopUpMessage in self.waitForElementVisible((By.CSS_SELECTOR,successPopUpMessage_CSS)).text  , f"'{successPopUpMessage}' ifadesi bulunamadı."
+        sleep(2)
         continueEducationVerify=self.waitForElementVisible((By.CSS_SELECTOR,continueEducationVerify_CSS))
         assert continueEducationTitle in continueEducationVerify.text, f"'{continueEducationTitle}' ifadesi bulunamadı."
 
@@ -109,6 +111,7 @@ class Test_MyEducation_Life:
 
     def test_delete_education(self):
         self.test_add_education()
+        sleep(1)
         deleteButton=self.waitForElementVisible((By.CSS_SELECTOR,deleteButton_CSS))
         deleteButton.click()
         assert popUpMessage == self.waitForElementVisible((By.CSS_SELECTOR,popUpMessage_CSS)).text
@@ -128,6 +131,7 @@ class Test_MyEducation_Life:
         sleep(2)
         successDeleteEducationPopUpMessage=self.waitForElementVisible((By.CSS_SELECTOR,successDeleteEducationPopUpMessage_CSS))
         assert successDeleteEducationPopUpText in successDeleteEducationPopUpMessage.text, f"'{successDeleteEducationPopUpText}' ifadesi bulunamadı." 
+        sleep(2)
 
     #Bug , mezuniyet yılı seçildiğinde, devam ediyor butonu pasif hale gelmeliydi.
     def test_continueButton_with_graduationYear_BUG(self):
@@ -152,6 +156,8 @@ class Test_MyEducation_Life:
         sleep(2)
         finishDateFromCalendar.click()
         continueEducationButton=self.waitForElementVisible((By.CSS_SELECTOR,continueEducationButton_CCS))
+        continueEducationButton.click()
+        self.driver.save_screenshot("screenshots/devamEdenEgitimVeMezunYiliAyniAndaAktifHatasi.png")
         # Devam et butonunun tıklanabilir olup olmadığını kontrol eder.Normalde tıklanabilir olmaması lazım. #bug
         assert not continueEducationButton.is_enabled(), "Devam et butonu tıklanabilir durumda"
         sleep(2)
