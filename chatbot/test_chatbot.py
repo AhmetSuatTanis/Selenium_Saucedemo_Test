@@ -60,19 +60,31 @@ class Test_ChatBot:
     
   
   def test_chatBot_closeButton(self):
-    self.test_chatBot_communication()
-    sleep(2)
+    # self.test_chatBot_communication()
+    #tüm işlemleri tekrardan yaptırmak yerine kısa yoldan kapat butonu kontrolü yapıldı.
+    self.waitForElementAvailableForIFrame((By.XPATH,chatBot_Iframe_xpath))
+    self.waitForElementVisible((By.XPATH, chatBot_xpath)).click()
+    self.driver.switch_to.default_content()
+    self.waitForElementAvailableForIFrame((By.XPATH,chatBotMessageBox_Iframe_xpath))
+    messageBox=self.waitForElementVisible((By.XPATH,messageInputBox_xpath))
+    messageBox.send_keys(messageText)
+    sendButton=self.waitForElementVisible((By.XPATH,messageSendButton_xpath))
+    sendButton.click()
+    assert self.waitForElementVisible((By.XPATH,actualTitleOfMessageBox_xpath )).text==expectedTitleOfMessageBox
+    assert expectedWelcomeMessage in self.waitForElementVisible((By.XPATH,actualWelcomeMessage_xpath)).text
+    self.waitForElementVisible((By.XPATH,nameInputBox_xpath)).send_keys(name)
+    self.waitForElementVisible((By.CSS_SELECTOR,nameSendButton_CSS)).click()
+    #Normalde "Ahmet Suat" yazdığım için bana Memnun oldum Ahmet yazması gerekirken. ilk girdiğim "Selam" yazısı ile bana Memnun oldum Selam diyor.
+    #Selam yazısını adım gibi alıp kullanıyor. Bug var burada
+    assert expectedGreetingMessage in self.waitForElementVisible((By.XPATH,actualGreetingMessage_xpath)).text
     self.waitForElementVisible((By.CSS_SELECTOR,closeButton_CSS)).click()
-    sleep(2)
-    self.waitForElementVisible((By.CSS_SELECTOR,noButton_CSS)).click()
-    sleep(2)
-    self.waitForElementVisible((By.CSS_SELECTOR,closeButton_CSS)).click()
-    sleep(2)
+    sleep(1)
     self.waitForElementVisible((By.CSS_SELECTOR,yesButton_CSS)).click()
-    sleep(3)
+    sleep(4)
     self.waitForElementVisible((By.CSS_SELECTOR,commentInputBox_CSS)).send_keys(commentMessage)
+    sleep(1)
     self.waitForElementVisible((By.CSS_SELECTOR,commentSendButton_CSS)).click()
-    sleep(5)
+    sleep(3)
 
   def test_chatBot_minimizeButton(self):
     self.test_chatBot_communication()

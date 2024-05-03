@@ -16,19 +16,33 @@ class Test_Degerlendirmeler:
         self.driver=webdriver.Chrome()
         self.driver.maximize_window()
         self.driver.get(giris_URL)
+        
+    def pre_condition(self):
         emailInput=self.waitForElementVisible((By.CSS_SELECTOR,email_CSS))
         passwordInput=self.waitForElementVisible((By.CSS_SELECTOR,password_CSS))
         loginButton=self.waitForElementVisible((By.CSS_SELECTOR,loginButton_CSS))
         actions=ActionChains(self.driver)
         actions.send_keys_to_element(emailInput,userEmail)
         actions.send_keys_to_element(passwordInput,userPassword)
-        #ilk test case çalışırken bu yorum satırını aktif et üstteki 2 satırı deaktif et !!!!
-        # actions.send_keys_to_element(emailInput,"telefal158@em2lab.com")
-        # actions.send_keys_to_element(passwordInput,"Ahmet=12345")
         actions.click(loginButton)
         actions.perform()
         successPopupMessageClose=self.waitForElementVisible((By.CSS_SELECTOR,successPopupMessage_CSS))
         successPopupMessageClose.click()
+
+    def pre_condition1(self):
+        emailInput=self.waitForElementVisible((By.CSS_SELECTOR,email_CSS))
+        passwordInput=self.waitForElementVisible((By.CSS_SELECTOR,password_CSS))
+        loginButton=self.waitForElementVisible((By.CSS_SELECTOR,loginButton_CSS))
+        actions=ActionChains(self.driver)
+        # actions.send_keys_to_element(emailInput,userEmail)
+        # actions.send_keys_to_element(passwordInput,userPassword)
+        #ilk test case çalışırken bu yorum satırını aktif et üstteki 2 satırı deaktif et !!!!
+        actions.send_keys_to_element(emailInput,"telefal158@em2lab.com")
+        actions.send_keys_to_element(passwordInput,"Ahmet=12345")
+        actions.click(loginButton)
+        actions.perform()
+        successPopupMessageClose=self.waitForElementVisible((By.CSS_SELECTOR,successPopupMessage_CSS))
+        successPopupMessageClose.click()    
         
 
         
@@ -44,6 +58,7 @@ class Test_Degerlendirmeler:
     #Bu test case her çalıştığında yeni bir profil maili vermemiz gerekmektedir.
     #Değerlendirme testinini çözme
     def test_solving_evaluations_test(self):
+        self.pre_condition1()
         evaluationButton=self.waitForElementVisible((By.XPATH,evaluationButton_xpath))
         evaluationButton.click()
         tobetoTitle=self.waitForElementVisible((By.CSS_SELECTOR,tobetoTitleText_CSS))
@@ -83,6 +98,7 @@ class Test_Degerlendirmeler:
 
 
     def test_display_of_evaluations(self):
+        self.pre_condition()
         evaluationButton=self.waitForElementVisible((By.XPATH,evaluationButton_xpath))
         evaluationButton.click()
         sleep(2)
@@ -95,6 +111,7 @@ class Test_Degerlendirmeler:
         sleep(2)
 
     def test_solving_test_of_software(self):
+        self.pre_condition1()
         evaluationButton=self.waitForElementVisible((By.XPATH,evaluationButton_xpath))
         evaluationButton.click()
         sleep(2)
