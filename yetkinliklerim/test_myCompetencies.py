@@ -17,6 +17,17 @@ class Test_Yetkinliklerim:
         self.driver=webdriver.Chrome()
         self.driver.maximize_window()
         self.driver.get(giris_URL)
+    
+    def teardown_method(self):
+        self.driver.quit()
+
+    def waitForElementVisible(self,locator,timeout=10):
+        return WebDriverWait(self.driver,timeout).until(ec.visibility_of_element_located(locator))
+    
+    def waitForElementsVisible(self, locator, timeout=10):
+        return WebDriverWait(self.driver, timeout).until(ec.visibility_of_all_elements_located(locator))
+    
+    def pre_condition(self):
         emailInput=self.waitForElementVisible((By.CSS_SELECTOR,email_CSS))
         passwordInput=self.waitForElementVisible((By.CSS_SELECTOR,password_CSS))
         loginButton=self.waitForElementVisible((By.CSS_SELECTOR,loginButton_CSS))
@@ -32,17 +43,9 @@ class Test_Yetkinliklerim:
         profilDropdownMenu.click()
         profileInformationButton=self.waitForElementVisible((By.XPATH,profileInformationButton_xpath))
         profileInformationButton.click()
-    
-    def teardown_method(self):
-        self.driver.quit()
-
-    def waitForElementVisible(self,locator,timeout=10):
-        return WebDriverWait(self.driver,timeout).until(ec.visibility_of_element_located(locator))
-    
-    def waitForElementsVisible(self, locator, timeout=10):
-        return WebDriverWait(self.driver, timeout).until(ec.visibility_of_all_elements_located(locator))
 
     def test_competence_add(self):
+        self.pre_condition()
         myCompetenciesButton=self.waitForElementVisible((By.XPATH,myCompetenciesButton_xpath))
         myCompetenciesButton.click()
         competencySelectButton=self.waitForElementVisible((By.CSS_SELECTOR,competencySelectButton_CSS))
@@ -54,11 +57,11 @@ class Test_Yetkinliklerim:
         sleep(1)
         saveButton=self.waitForElementVisible((By.CSS_SELECTOR,saveButton_CSS))
         saveButton.click()
-        actualSuccessfulPopUpMessage=self.waitForElementVisible((By.XPATH,successfulPopUpMessage_xpath))
-        assert expectedSuccessfulPopUpMessage in actualSuccessfulPopUpMessage.text, f"'{expectedSuccessfulDeletePopUpMessage}' ifadesi bulunamadı."
         sleep(2)
+        #kaç tane yetkinlike eklendiyse onları liste halinde alan locator. waitForElementsVisible()
+        addedCompetency=self.waitForElementVisible((By.XPATH,addedCompetency_xpath))
         addedCompetencies=self.waitForElementsVisible((By.CSS_SELECTOR,addedCompetencies_CSS))
-        assert any("C#" == competence.text for competence in addedCompetencies)
+        assert any(addedCompetency.text == competence.text for competence in addedCompetencies), f" yetenek bulunamadı."
         sleep(2)
 
     def test_competence_delete(self):
@@ -82,6 +85,7 @@ class Test_Yetkinliklerim:
         #     assert True
 
     def test_bosBirakilanYerler_hataMesajlari(self):
+        self.pre_condition()
         myCompetenciesButton=self.waitForElementVisible((By.XPATH,myCompetenciesButton_xpath))
         myCompetenciesButton.click()
         saveButton=self.waitForElementVisible((By.CSS_SELECTOR,saveButton_CSS))

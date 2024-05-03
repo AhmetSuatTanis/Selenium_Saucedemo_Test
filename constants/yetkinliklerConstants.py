@@ -17,4 +17,4 @@ yesButton_CSS=".btn.btn-yes.my-3"
 succesful_CSS=".toast-body"
 errorMessage_CSS=".toast-body"
 expectedErrorMessage="Herhangi bir yetenek seçmediniz!"
-
+addedCompetency_xpath="(//span[@class='grade-details-content'])[last()]"

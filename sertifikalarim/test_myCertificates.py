@@ -17,6 +17,17 @@ class Test_Sertifikalarim:
         self.driver=webdriver.Chrome()
         self.driver.maximize_window()
         self.driver.get(giris_URL)
+        
+    def teardown_method(self):
+        self.driver.quit()
+
+    def waitForElementVisible(self,locator,timeout=10):
+        return WebDriverWait(self.driver,timeout).until(ec.visibility_of_element_located(locator))
+    
+    def waitForElementsVisible(self, locator, timeout=10):
+        return WebDriverWait(self.driver, timeout).until(ec.visibility_of_all_elements_located(locator))    
+
+    def pre_condition(self):
         emailInput=self.waitForElementVisible((By.CSS_SELECTOR,email_CSS))
         passwordInput=self.waitForElementVisible((By.CSS_SELECTOR,password_CSS))
         loginButton=self.waitForElementVisible((By.CSS_SELECTOR,loginButton_CSS))
@@ -31,18 +42,12 @@ class Test_Sertifikalarim:
         profilDropdownMenu=self.waitForElementVisible((By.CSS_SELECTOR,profilDropdownMenu_CSS))
         profilDropdownMenu.click()
         profileInformationButton=self.waitForElementVisible((By.XPATH,profileInformationButton_xpath))
-        profileInformationButton.click()
-    
-    def teardown_method(self):
-        self.driver.quit()
+        profileInformationButton.click()    
 
-    def waitForElementVisible(self,locator,timeout=10):
-        return WebDriverWait(self.driver,timeout).until(ec.visibility_of_element_located(locator))
     
-    def waitForElementsVisible(self, locator, timeout=10):
-        return WebDriverWait(self.driver, timeout).until(ec.visibility_of_all_elements_located(locator))
 
     def test_certificate_adding_deleting_downloading(self):
+        self.pre_condition()
         MyCertificatesButton=self.waitForElementVisible((By.XPATH,MyCertificatesButton_xpath))
         MyCertificatesButton.click()
         sleep(2)
